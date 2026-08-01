@@ -1,149 +1,148 @@
-const products = [
+const API_URL = "https://pos.goodong.id/api.php?act=product";
+const BASE_IMAGE = "https://pos.goodong.id/";
 
-{
-id:1,
-name:"Kopi Hitam",
-price:15000,
-image:"https://picsum.photos/300?1"
-},
+const productDiv = document.getElementById("products");
+const cartDiv = document.getElementById("cart-items");
 
-{
-id:2,
-name:"Cafe Latte",
-price:25000,
-image:"https://picsum.photos/300?2"
-},
+let products = [];
+let cart = [];
 
-{
-id:3,
-name:"Cappuccino",
-price:23000,
-image:"https://picsum.photos/300?3"
-},
+// Ambil data dari API
+async function loadProducts() {
+    try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
 
-{
-id:4,
-name:"Es Kopi Susu",
-price:20000,
-image:"https://picsum.photos/300?4"
-},
+        // Simpan ke variabel products
+        products = data.map(item => ({
+            id: Number(item.id),
+            name: item.name,
+            price: Number(item.price),
+            image: BASE_IMAGE + item.images,
+            stock: Number(item.stock_quantity),
+            status: item.status
+        }));
 
-{
-id:5,
-name:"Americano",
-price:18000,
-image:"https://picsum.photos/300?5"
-},
+        renderProducts();
 
-{
-id:6,
-name:"Flat White",
-price:24000,
-image:"https://picsum.photos/300?6"
+    } catch (err) {
+        console.error(err);
+        productDiv.innerHTML = "<p>Gagal mengambil data produk.</p>";
+    }
 }
 
-];
+// Tampilkan produk
+function renderProducts() {
 
-const productDiv=document.getElementById("products");
-const cartDiv=document.getElementById("cart-items");
+    productDiv.innerHTML = "";
 
-let cart=[];
+    products.forEach(p => {
 
-products.forEach(p=>{
+        productDiv.innerHTML += `
 
-productDiv.innerHTML+=`
+        <div class="card">
 
-<div class="card">
+            <img src="${p.image}" alt="${p.name}">
 
-<img src="${p.image}">
+            <div class="info">
 
-<div class="info">
+                <h4>${p.name}</h4>
 
-<h4>${p.name}</h4>
+                <p>Rp ${p.price.toLocaleString('id-ID')}</p>
 
-<p>Rp ${p.price.toLocaleString('id-ID')}</p>
+                <small>Stok : ${p.stock}</small>
 
-<div class="bottom">
+                <div class="bottom">
 
-<button onclick="addCart(${p.id})">
-+
-</button>
+                    <button
+                        onclick="addCart(${p.id})"
+                        ${p.stock <= 0 ? "disabled" : ""}
+                    >
+                        ${p.stock <= 0 ? "Habis" : "+"}
+                    </button>
 
-</div>
+                </div>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-`;
+        `;
 
-});
-
-function addCart(id){
-
-const product=products.find(x=>x.id==id);
-
-const exist=cart.find(x=>x.id==id);
-
-if(exist){
-
-exist.qty++;
-
-}else{
-
-cart.push({...product,qty:1});
+    });
 
 }
 
-renderCart();
+// Tambah ke keranjang
+function addCart(id) {
+
+    const product = products.find(x => x.id === id);
+
+    if (!product) return;
+
+    const exist = cart.find(x => x.id === id);
+
+    if (exist) {
+        exist.qty++;
+    } else {
+        cart.push({
+            ...product,
+            qty: 1
+        });
+    }
+
+    renderCart();
 
 }
 
-function renderCart(){
+// Render keranjang
+function renderCart() {
 
-cartDiv.innerHTML="";
+    cartDiv.innerHTML = "";
 
-let subtotal=0;
+    let subtotal = 0;
 
-cart.forEach(item=>{
+    cart.forEach(item => {
 
-subtotal+=item.price*item.qty;
+        subtotal += item.price * item.qty;
 
-cartDiv.innerHTML+=`
+        cartDiv.innerHTML += `
 
-<div class="cart-item">
+        <div class="cart-item">
 
-<div>
+            <div>
 
-<b>${item.qty}x</b>
+                <b>${item.qty}x</b>
 
-${item.name}
+                ${item.name}
 
-</div>
+            </div>
 
-<div>
+            <div>
 
-Rp ${(item.price*item.qty).toLocaleString('id-ID')}
+                Rp ${(item.price * item.qty).toLocaleString('id-ID')}
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-`;
+        `;
 
-});
+    });
 
-let tax=subtotal*0.10;
+    const tax = subtotal * 0.10;
+    const grand = subtotal + tax;
 
-let grand=subtotal+tax;
+    document.getElementById("subtotal").innerHTML =
+        "Rp " + subtotal.toLocaleString('id-ID');
 
-document.getElementById("subtotal").innerHTML=
-"Rp "+subtotal.toLocaleString('id-ID');
+    document.getElementById("tax").innerHTML =
+        "Rp " + tax.toLocaleString('id-ID');
 
-document.getElementById("tax").innerHTML=
-"Rp "+tax.toLocaleString('id-ID');
-
-document.getElementById("grand").innerHTML=
-"Rp "+grand.toLocaleString('id-ID');
+    document.getElementById("grand").innerHTML =
+        "Rp " + grand.toLocaleString('id-ID');
 
 }
+
+// Jalankan saat halaman dibuka
+loadProducts();

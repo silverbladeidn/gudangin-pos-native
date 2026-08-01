@@ -1,4 +1,8 @@
 <?php
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+
 include "config.php";
 
 if($_GET['act'] == 'product'){
