@@ -19,17 +19,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     <aside class="sidebar">
 
         <div class="logo">
-            POS
+            POS GUDANGIN
         </div>
 
         <ul>
 
             <li class="active">
-                <i class="fa fa-cash-register"></i>
-                Register
-            </li>
-
-            <li>
                 <i class="fa fa-file"></i>
                 Transaksi
             </li>
@@ -44,11 +39,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
                 Pelanggan
             </li>
 
-            <li>
-                <i class="fa fa-gear"></i>
-                Pengaturan
-            </li>
-
         </ul>
 
     </aside>
@@ -60,9 +50,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
             <div class="tabs">
                 <button class="tab active">All</button>
-                <button class="tab">Kopi</button>
+                <!-- <button class="tab">Kopi</button>
                 <button class="tab">Makanan</button>
-                <button class="tab">Minuman</button>
+                <button class="tab">Minuman</button> -->
             </div>
 
             <input type="text" placeholder="Cari Produk...">
@@ -109,10 +99,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
             <button class="active">
                 Tunai
-            </button>
-
-            <button>
-                Kartu
             </button>
 
         </div>

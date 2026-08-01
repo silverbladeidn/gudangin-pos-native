@@ -18,7 +18,8 @@ async function loadProducts() {
             id: Number(item.id),
             name: item.name,
             price: Number(item.price),
-            image: BASE_IMAGE + item.images,
+            //image: BASE_IMAGE + item.images,
+            image: 'https://picsum.photos/300?1',
             stock: Number(item.stock_quantity),
             status: item.status
         }));
@@ -31,7 +32,6 @@ async function loadProducts() {
     }
 }
 
-// Tampilkan produk
 function renderProducts() {
 
     productDiv.innerHTML = "";
@@ -58,7 +58,7 @@ function renderProducts() {
                         onclick="addCart(${p.id})"
                         ${p.stock <= 0 ? "disabled" : ""}
                     >
-                        ${p.stock <= 0 ? "Habis" : "+"}
+                        ${p.stock <= 0 ? "0" : "+"}
                     </button>
 
                 </div>
@@ -73,7 +73,6 @@ function renderProducts() {
 
 }
 
-// Tambah ke keranjang
 function addCart(id) {
 
     const product = products.find(x => x.id === id);
@@ -95,39 +94,22 @@ function addCart(id) {
 
 }
 
-// Render keranjang
 function renderCart() {
-
     cartDiv.innerHTML = "";
-
     let subtotal = 0;
-
     cart.forEach(item => {
-
         subtotal += item.price * item.qty;
-
         cartDiv.innerHTML += `
-
         <div class="cart-item">
-
             <div>
-
                 <b>${item.qty}x</b>
-
                 ${item.name}
-
             </div>
-
             <div>
-
                 Rp ${(item.price * item.qty).toLocaleString('id-ID')}
-
             </div>
-
         </div>
-
         `;
-
     });
 
     const tax = subtotal * 0.10;
@@ -144,5 +126,4 @@ function renderCart() {
 
 }
 
-// Jalankan saat halaman dibuka
 loadProducts();
