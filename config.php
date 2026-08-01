@@ -1,7 +1,7 @@
 <?php
-$config = mysqli_connect(
+$koneksi = mysqli_connect(
     'localhost',
-    'root',
-    '',
-    'goodongid'
+    'good6767_root',
+    'Barlok15@1234',
+    'good6767_backend_goodong'
 );
