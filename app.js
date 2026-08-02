@@ -1,5 +1,5 @@
 const API_URL = "https://pos.goodong.id/api.php?act=product";
-const BASE_IMAGE = "https://pos.goodong.id/";
+const BASE_IMAGE = "https://backend.goodong.id/storage/";
 
 const productDiv = document.getElementById("products");
 const cartDiv = document.getElementById("cart-items");
@@ -18,8 +18,7 @@ async function loadProducts() {
             id: Number(item.id),
             name: item.name,
             price: Number(item.price),
-            //image: BASE_IMAGE + item.images,
-            image: 'https://picsum.photos/300?1',
+            image: BASE_IMAGE + item.images,
             stock: Number(item.stock_quantity),
             status: item.status
         }));
