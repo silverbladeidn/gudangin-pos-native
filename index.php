@@ -91,7 +91,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
         </div>
 
-        <button class="pay">
+        <button class="pay" id="payBtn">
             BAYAR
         </button>
 

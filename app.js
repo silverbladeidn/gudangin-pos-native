@@ -125,4 +125,17 @@ function renderCart() {
 
 }
 
+document.getElementById("payBtn").addEventListener("click", () => {
+
+    if (cart.length === 0) {
+        alert("Keranjang masih kosong.");
+        return;
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    window.location.href = "payment.php";
+
+});
+
 loadProducts();
