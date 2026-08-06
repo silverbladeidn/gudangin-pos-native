@@ -3,7 +3,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
-include "config.php";
+include "config/config.php";
 
 if($_GET['act'] == 'product'){
     $sql = mysqli_query($koneksi,"select * from products");
